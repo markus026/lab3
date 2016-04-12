@@ -1,10 +1,10 @@
 package spanningusa;
 
-import lab3.City;
 
 public class City implements Comparable {
 	String name;
 	int distance;
+	String origin = "";
 	
 	public City(String string, int distance) {
 		this.name = string;
@@ -19,6 +19,10 @@ public class City implements Comparable {
 		return (distance - arg0.getDistance());
 	}
 
+	public void setOrigin(String s){
+		origin = s;
+	}
+	
 	@Override
 	public int compareTo(Object o) {
 		return(distance - ((City) o).getDistance());
