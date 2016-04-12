@@ -29,28 +29,34 @@ public class SpanningTree  {
 	}
 
 	public City getNeighbor(String name) {
-		while (MST.contains(cities.get(name).peek())) {
-			MST.contains(cities.get(name).remove());
+		if (cities.containsKey(name) && MST.contains(name)) {		
+			cities.get(name).remove();
+		}if(cities.isEmpty()){
+			System.out.println("empty!!!!");
+			return null;
+		}else{
+			City city =  cities.get(name).poll();
+			return city;
 		}
-		return cities.get(name).poll();
 	}
 
-	public void calculateMST() {
+	public String calculateMST() {
 		City current;
 		String first;
 		if (!cities.isEmpty()) {
-			first = cities.entrySet().iterator().next().getKey();
-			current = cities.get(first).poll();
-			MST.add(first);
-		} else {
-			System.out.println("empty");
-			return;
-		}
-		while (!cities.isEmpty()) {
-			current = getNeighbor(current.name);
+			current = cities.entrySet().iterator().next().getValue().element();
 			MST.add(current.name);
-			length += current.distance;
+			for (int i = 0; i < cities.size(); i++) {	
+				current = getNeighbor(current.name);
+				MST.add(current.name);
+				length += current.distance;
+				i++;
+			}
+		} else {
+			return "empty";
 		}
+
+		return(MST.toString().trim() + ", total length = " + length); 
 	}
 	
 /*	public String toString(){

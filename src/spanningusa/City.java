@@ -1,5 +1,7 @@
 package spanningusa;
 
+import lab3.City;
+
 public class City implements Comparable {
 	String name;
 	int distance;
