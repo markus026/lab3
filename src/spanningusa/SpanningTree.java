@@ -5,26 +5,28 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class SpanningTree {
-	// ArrayList MST;
 	int length;
-	HashMap<String, PriorityQueue<City>> cities;
+	HashMap<String, ArrayList<City>> cities;
 	HashMap<String, ArrayList<String>> mst;
 
 	public SpanningTree() {
-		cities = new HashMap<String, PriorityQueue<City>>();
+		cities = new HashMap<String, ArrayList<City>>();
 		mst = new HashMap<String, ArrayList<String>>();
-		// MST = new ArrayList<String>();
 	}
 
 	public void addCity(String string) {
 		if (!cities.containsKey(string)) {
-			cities.put(string, new PriorityQueue<City>());
+			cities.put(string, new ArrayList<City>());
 		}
 	}
 
 	public void addNeighbor(String city, String neighbour, int distance) {
 		cities.get(city).add(new City(neighbour, distance));
 		cities.get(neighbour).add(new City(city, distance));
+//		}
+//		catch(NullPointerException ex){
+//			System.out.println(city + "||" + neighbour + "||" + distance);
+//		}
 	}
 
 	public int size() {
@@ -38,7 +40,6 @@ public class SpanningTree {
 			unvisitedCities.add(s);
 		}
 		
-		HashMap<String, ArrayList<City>> tempEdges = new HashMap<String, ArrayList<City>>();
 		PriorityQueue<City> nextEdges = new PriorityQueue<City>();
 		String nextCity = unvisitedCities.get(unvisitedCities.size() - 1);
 		while (unvisitedCities.size() > 1) {
@@ -51,10 +52,12 @@ public class SpanningTree {
 			}
 			if (!nextEdges.isEmpty()) {
 				City city2 = nextEdges.poll();
+				while(!unvisitedCities.contains(city2.name)){
+					city2 = nextEdges.poll();
+				}
 				mst.get(city2.origin).add(city2.name);
 				mst.get(city2.name).add(city2.origin);
 				length += city2.distance;
-			//	System.out.println(length);
 				nextCity = city2.name;
 			} else if (!unvisitedCities.isEmpty()) {
 				nextCity = unvisitedCities.get(unvisitedCities.size() - 1);
@@ -65,9 +68,14 @@ public class SpanningTree {
 
 	public void printTree() {
 		for (String rootCity : mst.keySet()) {
-			System.out.print(rootCity + ": ");
+			if(rootCity.length() < 7){
+				System.out.print(rootCity + ":\t\t\t");	
+			}
+			else{
+			System.out.print(rootCity + ":\t\t");
+			}
 			for(String leafCity : mst.get(rootCity)){
-				System.out.print(leafCity + "\t");
+				System.out.print(leafCity + ",\t");
 			}
 			System.out.println();
 		}

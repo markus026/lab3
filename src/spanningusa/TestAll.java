@@ -120,8 +120,8 @@ public class TestAll {
 		tree.addNeighbor("d", "b", 4);
 		tree.addNeighbor("a", "d", 1);
 	//	tree.addNeighbor("a", "c", 1);
-	//	System.out.println(tree.mst());
-	//	tree.printTree();
+		//System.out.println(tree.mst());
+		//tree.printTree();
 	}
 	
 }
